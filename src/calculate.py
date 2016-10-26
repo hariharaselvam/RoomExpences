@@ -26,13 +26,13 @@ for i in range(number):
 print "Total Amount paid : "+str(v_total)+" Rs/-"
 #g_total += v_total
 while True:
-    name = raw_input("Enter the expens")
+    name = raw_input("Enter the expens  ")
     if name=="":
         break
     else:
-        amount = raw_input("Enter the amount")
+        amount = raw_input("Enter the amount    ")
         expense[name]=int(amount)
-        e_total += amount
+        e_total += int(amount)
 
 g_total = e_total + v_total
 average = g_total / number
@@ -45,7 +45,7 @@ for i in range(number):
 
 print " Final result "
 for key in expense:
-    print key +".........."+"  "+expense[amount]+"  Rs/-"
+    print key +".........."+"  "+str(expense[key])+"  Rs/-"
 print "Expense Total    : "+str(e_total)+"     Rs/-"
 print "Vegitables Total : "+str(v_total)+"     Rs/-"
 print "Grand Total      : "+str(g_total)+"     Rs/-"
