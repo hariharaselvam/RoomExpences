@@ -20,7 +20,7 @@ from django.views.static import serve
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', include('ui.urls')),
+    url(r'^', include('ui.urls')),
 ]
 urlpatterns += [
         url(r'^media/(?P<path>.*)$', serve, {

@@ -1,6 +1,9 @@
 from django.conf.urls import url
-from ui import views
+
+from .views import *
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^$', index, name='index'),
+    url(r'^accounts/login/$', signin, name='login'),
+    url(r'^accounts/logout/$', signout, name='logout'),
 ]
