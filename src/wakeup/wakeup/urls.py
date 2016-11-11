@@ -17,10 +17,15 @@ from django.conf.urls import url,include
 from django.conf import settings
 from django.contrib import admin
 from django.views.static import serve
+from rest_framework.routers import SimpleRouter
+from ui.api import *
+router = SimpleRouter()
+router.register('users',UserViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('ui.urls')),
+    url(r'^api/v1/', include(router.urls))
 ]
 urlpatterns += [
         url(r'^media/(?P<path>.*)$', serve, {
