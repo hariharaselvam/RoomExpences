@@ -3,7 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from .models import *
-import json
+
 
 
 
@@ -53,25 +53,6 @@ class ExpenseView(ViewSet):
         obj = DailyExpenses.objects.get(id=pk)
         return Response({"id":obj.id,"date":obj.day,"amount":obj.amount,"description":obj.name,"user":obj.user.username})
 
-    #@csrf_exempt
-    def partial_update(self, request, pk=None):
-        if not request.user.is_authenticated():
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-        try:
-
-            data = request.data
-            amount = data['amount'] if 'amount' in data.keys() else 0
-            obj = DailyExpenses.objects.get(id=pk)
-            if amount != 0 and obj.user == request.user:
-                obj.amount = amount
-                obj.save()
-                return Response({"result": "Amount edited", "status": True})
-            else:
-                return Response({"result": "Failed to edit amount", "status": False})
-        except Exception as e:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-            pass
 
 
 class EditableView(ViewSet):
@@ -114,8 +95,23 @@ class EditableView(ViewSet):
     def retrieve(self, request, pk=None):
         if not request.user.is_authenticated():
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-        obj = DailyExpenses.objects.get(id=pk)
-        return Response({"id":obj.id,"date":obj.day,"amount":obj.amount,"description":obj.name,"user":obj.user.username})
+        try:
+            obj = DailyExpenses.objects.get(id=pk)
+            return Response({"id":obj.id,"date":obj.day,"amount":obj.amount,"description":obj.name,"user":obj.user.username})
+        except Exception as e:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def destroy(self, request, pk=None):
+        if not request.user.is_authenticated():
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        try:
+            expense = DailyExpenses.objects.filter(id=pk)[0]
+            if expense.user == request.user:
+                expense.delete()
+                return Response({"result": "Amount removed successfully", "status": True})
+        except Exception as e:
+            return Response({"result": "Amount was not removed", "status": False})
 
     @csrf_exempt
     def partial_update(self, request, pk=None):
