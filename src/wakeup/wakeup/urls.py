@@ -19,14 +19,37 @@ from django.contrib import admin
 from django.views.static import serve
 from rest_framework.routers import SimpleRouter
 from ui.api import *
-router = SimpleRouter()
-router.register('users',UserViewSet)
+import inspect
+#router = SimpleRouter()
+#router.register('users',UserViewSet)
+#router.register('session',SystemInfoViewSet)
+
+def module_import(name):
+    """
+    If you need to import a module on the fly, this helper function assists
+    you.  So say you want to import something like spam.eggs.are.cool, this
+    will sort out the full import.
+    """
+    mod = __import__(name, globals(), locals(), [], -1)
+    components = name.split('.')
+    for comp in components[1:]:
+        mod = getattr(mod, comp)
+    return mod
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('ui.urls')),
-    url(r'^api/v1/', include(router.urls))
+    url(r'^api/', include('api.urls')),
+    #url(r'^api/v1/', include(router.urls))
 ]
+
+module = module_import("ui")
+for name, obj in inspect.getmembers(module):
+    if name == 'dynamicurlpatterns':
+        if len(obj) > 0:
+            urlpatterns += obj
+#urlpatterns += SystemInfoViewSet
+
 urlpatterns += [
         url(r'^media/(?P<path>.*)$', serve, {
             'document_root': settings.MEDIA_ROOT,
