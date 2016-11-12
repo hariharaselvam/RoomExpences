@@ -24,6 +24,13 @@ window[appName].config(function ($stateProvider, $urlRouterProvider, $httpProvid
             controller: 'expenses_controller'
         });
 
+    $stateProvider
+        .state('editable', {
+            url: '/editable',
+            templateUrl: '/media/js/modules/editable.html',
+            controller: 'editable_controller'
+        });
+
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 });
