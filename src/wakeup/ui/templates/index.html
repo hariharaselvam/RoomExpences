@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="Wakeup">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,10 +12,12 @@
     <script src="/media/js/angular/angular-ui-router.js" type="text/javascript"></script>
     <script src="/media/js/angular/angular-route.js" type="text/javascript"></script>
     <script src="/media/js/angular/angular-resource.js" type="text/javascript"></script>
+    <script src="/media/js/factory/http_factory.js" type="text/javascript"></script>
+    <script src="/media/js/modules/dashboard.js" type="text/javascript"></script>
 </head>
-<body>
+<body ng-controller="wakeup_controller">
 <div class="container-fluid">
-  <h1>Hello World!</h1>
+  <h1>Hello {{ user.username }}</h1>
     <a class="btn btn-primary" href="/accounts/logout"> Log out </a>
   <p>Resize the browser window to see the effect.</p>
   <div class="row">
@@ -23,6 +25,12 @@
     <div class="col-sm-4" style="background-color:lavenderblush;">.col-sm-4</div>
     <div class="col-sm-4" style="background-color:lavender;">.col-sm-4</div>
   </div>
+</div>
+<div class="content-wrapper">
+
+    <div ui-view id="temp"></div>
+
+
 </div>
 </body>
 </html>
