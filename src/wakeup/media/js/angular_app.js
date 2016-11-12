@@ -1,8 +1,10 @@
 /**
  * Created by hariharaselvam on 11/12/16.
  */
-window.appName = 'Wakeup';
-window[appName] = angular.module(appName, ['ui.router',   'ngSanitize' ]);
+//var appName = 'Wakeup';
+window.appName = "Wakeup";
+window[appName] = angular.module(appName, ['ui.router', 'ngSanitize']);
+
 window[appName].config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
 
@@ -11,7 +13,7 @@ window[appName].config(function ($stateProvider, $urlRouterProvider, $httpProvid
     $stateProvider
         .state('dashboard', {
             url: '/',
-            templateUrl: '/media/modules/dashboard.html',
+            templateUrl: '/media/js/modules/dashboard.html',
             controller: 'dashboard_controller'
         });
 
