@@ -1,18 +1,39 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
+            <div class="alert alert-success fade in" ng-show="response">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Success!</strong> {{ response }}
+            </div>
             <table class="table table-responsive">
                 <tr>
-                    <th>Username</th>
+                    <th>Id</th>
                     <th>Description</th>
                     <th>Date</th>
                     <th>Amount</th>
+                    <th>Actions</th>
                 </tr>
                 <tr ng-repeat="row in expenses">
-                    <td>{{ row.user }}</td>
-                    <td>{{ row.description }}</td>
-                    <td>{{ row.date }}</td>
-                    <td>{{ row.amount }}</td>
+                    <td>{{ row.id }}</td>
+                    <td>
+                        <span ng-bind="row.description" ng-show="row.edit=='edit'"></span>
+                        <input type="text" ng-model="row.description" class="form-control" ng-show="row.edit=='ok'">
+                    </td>
+                    <td>
+                        <span ng-bind="row.date" ng-show="row.edit=='edit'"></span>
+                        <input type="text" ng-model="row.date" class="form-control" ng-show="row.edit=='ok'">
+                    </td>
+                    <td>
+                        <span ng-bind="row.amount" ng-show="row.edit=='edit'"></span>
+                        <input type="number" ng-model="row.amount" class="form-control" ng-show="row.edit=='ok'">
+                    </td>
+                    <td>
+                        <button class="btn" ng-click="editable(row.index)" ng-show="row.edit=='edit'">
+                            <span class="glyphicon glyphicon-edit" ></span></button>
+                        <button class="btn" ng-click="editable(row.index)" ng-show="row.edit=='ok'">
+                            <span class="glyphicon glyphicon-ok" ></span></button>
+                        <button class="btn"><span class="glyphicon glyphicon-remove"></span></button>
+                    </td>
                 </tr>
             </table>
         </div>
