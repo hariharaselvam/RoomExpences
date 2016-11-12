@@ -8,4 +8,13 @@ window[appName].controller('dashboard_controller', function ($rootScope, $scope,
         "page":"Dashboard"
     };
 
+    $scope.add_amount = function () {
+        var param = {"name":$scope.desc,"date":$scope.date,"amount":$scope.amount};
+        http.Requests("post","/api/expense/expense/",param).success(function (response) {
+
+            $scope.response = response.result;
+
+        });
+    }
+
 });
