@@ -17,6 +17,12 @@ window[appName].config(function ($stateProvider, $urlRouterProvider, $httpProvid
             controller: 'dashboard_controller'
         });
 
+    $stateProvider
+        .state('expenses', {
+            url: '/expenses',
+            templateUrl: '/media/js/modules/expenses.html',
+            controller: 'expenses_controller'
+        });
 
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
