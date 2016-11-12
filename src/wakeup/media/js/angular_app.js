@@ -1,7 +1,7 @@
 /**
  * Created by hariharaselvam on 11/12/16.
  */
-//var appName = 'Wakeup';
+
 window.appName = "Wakeup";
 window[appName] = angular.module(appName, ['ui.router', 'ngSanitize']);
 
