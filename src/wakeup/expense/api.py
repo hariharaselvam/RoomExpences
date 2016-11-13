@@ -3,6 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from .models import *
+from django.contrib.auth import get_user_model
 
 
 
@@ -132,5 +133,29 @@ class EditableView(ViewSet):
         except Exception as e:
             print str(e)
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class AggregateUser(ViewSet):
+    base_url = r'/useramount'
+    base_name = ''
+
+    def create(self, request):
+        return Response(None, status=status.HTTP_400_BAD_REQUEST)
+
+    def list(self, request):
+        if not request.user.is_authenticated():
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        if request.method == "GET":
+            User = get_user_model()
+            result = []
+            for user in User.objects.all():
+                count=DailyExpenses.objects.filter(user=user).count()
+                result.append({"name":user.username,"y":count})
+            return Response(result)
+
+    def retrieve(self, request, code=None):
+        if not request.user.is_authenticated():
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
