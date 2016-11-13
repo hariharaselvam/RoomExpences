@@ -17,6 +17,14 @@
                     <td>
                         {{ p.amount }} Rs
                     </td>
+                    <td>
+                        <button class="btn" ng-click="editable(p.id,p.description,p.amount)">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </button>
+                        <button class="btn" ng-click="remove(p.id)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </td>
                 </tr>
             </table>
         </div>
