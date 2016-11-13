@@ -10,4 +10,13 @@ class DailyExpenses(models.Model):
     day = models.DateField()
     user = models.ForeignKey(User)
 
+class MonthlyExpenses(models.Model):
+    name = models.CharField(max_length=100)
+    amount = models.IntegerField()
+    day = models.DateField()
+
+class StaticPayments(models.Model):
+    name = models.CharField(max_length=100)
+    amount = models.IntegerField()
+
 

@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="breadcrumb">
+                Payments
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <table class="table table-responsive">
+                <tr ng-repeat="p in payment">
+                    <td>
+                        <b>{{ p.description }}</b>
+
+                    </td>
+                    <td>
+                        {{ p.amount }} Rs
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-lg-4">
+            <div class="alert alert-success fade in" ng-show="response">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Success!</strong> {{ response }}
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="desc">Description:</label>
+                    <input type="text" class="form-control" id="desc" ng-model="desc">
+                </div>
+                <div class="form-group">
+                    <label for="amt">Amount:</label>
+                    <input type="number" class="form-control" id="amt" ng-model="amount">
+                </div>
+
+                <button type="button" class="btn btn-default" ng-click="update()">Add</button>
+            </form>
+        </div>
+    </div>
+</div>

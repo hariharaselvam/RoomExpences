@@ -16,7 +16,7 @@ window[appName].controller('dashboard_controller', function ($rootScope, $scope,
             $scope.get_chart();
 
         });
-    }
+    };
 
     $scope.get_chart = function () {
         http.Requests("get", "/api/expense/useramount/", "").success(function (response) {

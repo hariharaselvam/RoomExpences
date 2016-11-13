@@ -31,6 +31,13 @@ window[appName].config(function ($stateProvider, $urlRouterProvider, $httpProvid
             controller: 'editable_controller'
         });
 
+    $stateProvider
+        .state('payments', {
+            url: '/payments',
+            templateUrl: '/media/js/modules/payments.html',
+            controller: 'payment_controller'
+        });
+
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 });

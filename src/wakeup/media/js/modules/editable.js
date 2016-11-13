@@ -25,7 +25,7 @@ window[appName].controller('editable_controller', function ($rootScope, $scope, 
         }
         else {
             var url = "/api/expense/editable/" + $scope.expenses[i]['id'] + "/";
-            var param = {"amount": $scope.expenses[i]['amount']}
+            var param = {"amount": $scope.expenses[i]['amount'],"name":$scope.expenses[i]['name'],"date":$scope.expenses[i]['date']}
             http.Requests("patch", url, param).success(function (response) {
                 $scope.response = response.result;
                 if (response.status) {

@@ -123,10 +123,21 @@ class EditableView(ViewSet):
         try:
 
             data = request.data
+            name = data['name'] if 'name' in data.keys() else ""
             amount = data['amount'] if 'amount' in data.keys() else 0
+            date = data['date'] if 'date' in data.keys() else None
             obj = DailyExpenses.objects.get(id=pk)
+            edit = 0
             if amount != 0 and obj.user == request.user:
                 obj.amount = amount
+                edit = 1
+            if name != "" and obj.user == request.user:
+                obj.name = name
+                edit = 1
+            if date != None and obj.user == request.user:
+                obj.date = date
+                edit =1
+            if edit ==1:
                 obj.save()
                 return Response({"result": "Amount edited", "status": True})
             else:
@@ -160,5 +171,74 @@ class AggregateUser(ViewSet):
     def retrieve(self, request, code=None):
         if not request.user.is_authenticated():
             return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+class PaymentView(ViewSet):
+    base_url = r'/payment'
+    base_name = ''
+
+    def create(self, request):
+        if not request.user.is_authenticated():
+            return Response(None, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            data = request.data
+            name = data['name'] if 'name' in data.keys() else ""
+            amount = data['amount'] if 'amount' in data.keys() else 0
+            result = True
+            try:
+                StaticPayments.objects.create(name=name, amount=amount)
+            except Exception as e:
+                print str(e)
+                result = False
+
+            if result:
+                return Response({"result": "Payment added", "status": True})
+            else:
+                return Response({"result": "Failed to add payment", "status": False})
+        except Exception as e:
+            print str(e)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def list(self, request):
+        if not request.user.is_authenticated():
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        if request.method == "GET":
+            result = []
+            for obj in StaticPayments.objects.all():
+                result.append({"id":obj.id,"amount":obj.amount,"description":obj.name})
+            return Response(result)
+
+    def retrieve(self, request, pk=None):
+        if not request.user.is_authenticated():
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        obj = DailyExpenses.objects.get(id=pk)
+        return Response({"id":obj.id,"amount":obj.amount,"description":obj.name})
+
+    @csrf_exempt
+    def partial_update(self, request, pk=None):
+        if not request.user.is_authenticated():
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        try:
+
+            data = request.data
+            name = data['name'] if 'name' in data.keys() else ""
+            amount = data['amount'] if 'amount' in data.keys() else 0
+
+            obj = DailyExpenses.objects.get(id=pk)
+            if amount != 0 :
+                obj.amount = amount
+            if name != "" :
+                obj.name = name
+            if amount != 0 or name != None:
+                obj.save()
+                return Response({"result": "Amount edited", "status": True})
+            else:
+                return Response({"result": "Failed to edit amount", "status": False})
+        except Exception as e:
+            print str(e)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 
