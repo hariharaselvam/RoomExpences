@@ -61,7 +61,7 @@ window[appName].controller('dashboard_controller', function ($rootScope, $scope,
                     },
 
                     series: [{
-                        name: 'Brands',
+                        name: 'User',
                         colorByPoint: true,
                         data: response
                     }],

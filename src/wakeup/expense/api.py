@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import *
 from django.contrib.auth import get_user_model
+from django.db.models import Sum
 
 
 
@@ -150,7 +151,9 @@ class AggregateUser(ViewSet):
             User = get_user_model()
             result = []
             for user in User.objects.all():
-                count=DailyExpenses.objects.filter(user=user).count()
+                agg=DailyExpenses.objects.filter(user=user).aggregate(Sum('amount'))
+                #print count['amount__sum']
+                count = agg['amount__sum'] if agg['amount__sum'] else 0
                 result.append({"name":user.username,"y":count})
             return Response(result)
 
