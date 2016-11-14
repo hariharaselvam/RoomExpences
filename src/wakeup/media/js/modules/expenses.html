@@ -3,10 +3,22 @@
         <div class="col-lg-12">
             <table class="table table-responsive">
                 <tr>
-                    <th>Username</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                    <th>Amount</th>
+                    <th>
+                        Username
+                        <span class="glyphicon" ng-class="class"  ng-click="column_sort('user')"></span>
+                        <span class="glyphicon" ng-class="class"  ng-click="column_sort('user')"></span>
+                    </th>
+                    <th>
+                        Description
+                        <span class="glyphicon" ng-class="class"  ng-click="column_sort('name')"></span>
+                    </th>
+                    <th>
+                        Date
+                        <span class="glyphicon" ng-class="class"  ng-click="column_sort('day')"></span>
+                    </th>
+                    <th>Amount
+                        <span class="glyphicon"  ng-class="class"  ng-click="column_sort('amount')"></span>
+                    </th>
                 </tr>
                 <tr ng-repeat="row in expenses">
                     <td>{{ row.user }}</td>

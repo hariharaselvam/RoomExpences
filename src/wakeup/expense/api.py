@@ -44,8 +44,13 @@ class ExpenseView(ViewSet):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
         if request.method == "GET":
+            sort = request.GET.get('sort', "day")
+            order = request.GET.get('order', None)
             result = []
-            for obj in DailyExpenses.objects.all():
+
+            if order=="desc":
+                sort="-"+sort
+            for obj in DailyExpenses.objects.all().order_by(sort):
                 result.append({"id":obj.id,"date":obj.day,"amount":obj.amount,"description":obj.name,"user":obj.user.username})
             return Response(result)
 
